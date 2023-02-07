@@ -8,14 +8,35 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @ObservedObject var generatorVM = GeneratorViewModel()
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+        
+        NavigationStack {
+         
+            VStack(alignment: .leading) {
+                
+                VStack{
+                    Text(generatorVM.message)
+                }
+                .padding()
+                
+                Button {
+                    
+                    Task {
+                        await generatorVM.generatePoem()
+                    }
+                    
+                } label: {
+                    Text("Generate Poem")
+                }
+                
+            }
+            .padding()
+            .navigationTitle("AI Poet")
         }
-        .padding()
+                
     }
 }
 
@@ -24,3 +45,6 @@ struct ContentView_Previews: PreviewProvider {
         ContentView()
     }
 }
+
+
+
